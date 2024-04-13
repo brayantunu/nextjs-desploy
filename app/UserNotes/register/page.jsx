@@ -1,7 +1,7 @@
 "use client"
 // Register.js
 import React, { useState } from 'react';
-import { useAuth } from '../../AuthContext'; // Importar la función useAuth desde el contexto de autenticación
+import { useAuth } from '../../api/users/route'; // Importar la función useAuth desde el contexto de autenticación
 
 export default function Register() {
   const { register } = useAuth(); // Obtener la función de registro del contexto de autenticación

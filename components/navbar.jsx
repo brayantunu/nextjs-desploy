@@ -1,7 +1,9 @@
-"use client"
+// Add this line at the top of your component file
+"use client";
+
 import React from 'react';
 import { Navbar, NavbarBrand, NavbarContent, NavbarItem, Link, Button } from "@nextui-org/react";
-import { useAuth } from '../app/AuthContext'; // Importa la función useAuth del contexto de autenticación
+import  {useAuth}  from '../app/api/users/route'; // Importa la función useAuth del contexto de autenticación
 
 export default function NavbarComponent() {
   const { isAuthenticated, userName, logout } = useAuth(); // Obtiene el estado de autenticación y otras funciones del contexto de autenticación

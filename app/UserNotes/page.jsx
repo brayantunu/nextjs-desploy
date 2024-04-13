@@ -2,7 +2,7 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import SpinnerCentered from '@/components/SpinnerCenter';
-import { useAuth } from '../AuthContext'; // Importa el hook useAuth
+import  {useAuth}  from '../api/users/route'; // Importa el hook useAuth
 
 const NotesComponent = () => {
   const { authToken } = useAuth(); // Obtén el token de acceso del contexto useAuth

@@ -1,4 +1,5 @@
-import  {AuthProvider}  from "../AuthContext";
+"use client"
+import  {AuthProvider}  from "../api/users/route";
 export default function UserNotes({ children }) {
   return (
     <>

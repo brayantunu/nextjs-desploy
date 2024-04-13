@@ -2,7 +2,7 @@
 import { useState } from "react";
 import axios from "axios";
 import Flash from "@/components/Flash";
-import { useAuth } from '../AuthContext'; // Importa el hook useAuth
+import  {useAuth}  from '../api/users/route'; // Importa el hook useAuth
 
 import {
   Card,

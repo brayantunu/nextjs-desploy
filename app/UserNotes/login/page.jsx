@@ -1,6 +1,6 @@
 "use client"
 import React, { useState } from 'react';
-import { useAuth } from '../../AuthContext'; // Importa el contexto de autenticación
+import  {useAuth}  from '../../api/users/route'; // Importa el contexto de autenticación
 
 export default function Login() {
   const [formData, setFormData] = useState({
