@@ -1,59 +1,15 @@
-'use client'
-import { useState, useEffect } from 'react';
+"use client"
+import React from 'react';
 import { Navbar, NavbarBrand, NavbarContent, NavbarItem, Link, Button } from "@nextui-org/react";
-import Login from "./login";
-import Register from "./registro";
-import axios from 'axios';
+import { useAuth } from '../app/AuthContext'; // Importa la función useAuth del contexto de autenticación
 
-export default function Navbarr() {
-  const [isAuthenticated, setIsAuthenticated] = useState(false); // Estado para indicar si el usuario está autenticado
-  const [userName, setUserName] = useState(''); // Estado para almacenar el nombre del usuario
-
-  // Función para verificar la autenticación solo cuando se monta el componente
-  useEffect(() => {
-    // Recuperar el token del almacenamiento local
-    const token = localStorage.getItem('token');
-    
-    // Si hay un token presente, verificar la autenticación
-    if (token) {
-      checkAuthentication(token);
-    }
-  }, []);
-
-  // Función para verificar la autenticación del usuario
-  const checkAuthentication = async (token) => {
-    try {
-      // Realizar una solicitud al backend para verificar la autenticación del usuario
-      const response = await axios.get('http://localhost:3001/User/Me', {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      });
-
-      if (response.status === 200) {
-        // Si la solicitud es exitosa, el usuario está autenticado
-        setIsAuthenticated(true);
-        // Establecer el nombre del usuario en el estado
-        setUserName(response.data.name);
-      }
-    } catch (error) {
-      // Si hay un error al verificar la autenticación, el usuario no está autenticado
-      setIsAuthenticated(false);
-    }
-  };
-
-  // Función para manejar el cierre de sesión
-  const handleLogout = () => {
-    // Lógica para cerrar sesión y actualizar el estado de autenticación
-    setIsAuthenticated(false);
-    // Eliminar el token del almacenamiento local al cerrar sesión
-    localStorage.removeItem('token');
-  };
+export default function NavbarComponent() {
+  const { isAuthenticated, userName, logout } = useAuth(); // Obtiene el estado de autenticación y otras funciones del contexto de autenticación
 
   return (
     <Navbar>
       <NavbarBrand>
-        <Link color="foreground" href="/">
+        <Link color="foreground" href="/UserNotes">
           Notes
         </Link>
       </NavbarBrand>
@@ -81,7 +37,7 @@ export default function Navbarr() {
               <span className="text-gray-600 mr-4">{userName}</span>
             </NavbarItem>
             <NavbarItem>
-              <Button color="error" onClick={handleLogout}>
+              <Button color="error" onClick={logout}>
                 Logout
               </Button>
             </NavbarItem>
@@ -89,10 +45,14 @@ export default function Navbarr() {
         ) : (
           <> 
             <NavbarItem>
-              <Login />
+              <Link color="foreground" href="/UserNotes/login">
+                Login
+              </Link>
             </NavbarItem>
             <NavbarItem>
-              <Register />
+              <Link color="foreground" href="/UserNotes/register">
+                Register
+              </Link>
             </NavbarItem>
           </>
         )}

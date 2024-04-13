@@ -1,4 +1,4 @@
-// import {Spinner} from "@nextui-org/react";
+import {Spinner} from "@nextui-org/react";
 
 export default function SpinnerCentered() {
   return (
@@ -10,7 +10,7 @@ export default function SpinnerCentered() {
         height: "100vh", // Ajusta la altura según tus necesidades
       }}
     >
-      {/* <Spinner /> */}
+      <Spinner />
     </div>
   );
 }

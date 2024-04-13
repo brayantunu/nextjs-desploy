@@ -2,6 +2,7 @@
 import { useState } from "react";
 import axios from "axios";
 import Flash from "@/components/Flash";
+import { useAuth } from '../AuthContext'; // Importa el hook useAuth
 
 import {
   Card,
@@ -15,23 +16,39 @@ import {
 
 export default function NotesApp() {
   const [flashMessage, setFlashMessage] = useState(null);
+  const { authToken } = useAuth(); // Obtén el token de acceso del contexto useAuth
 
   const handleNoteSubmit = async (event) => {
     event.preventDefault();
 
     const title = event.target.title.value;
-    const descripcion = event.target.descripcion.value;
+    const description = event.target.description.value;
 
     try {
-      await axios.post("http://localhost:3001/notes/new-note", {
-        title,
-        descripcion,
-      });
+      // Verifica si el usuario está autenticado utilizando el token de acceso del contexto
+      if (!authToken) {
+        // Si el usuario no está autenticado, redirígelo a la página de inicio de sesión
+        window.location.href = "http://localhost:3000/UserNotes/login";
+        return;
+      }
+
+      await axios.post(
+        "http://localhost:4002/notes/new-note",
+        {
+          title,
+          description,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${authToken}`, // Utiliza el token de acceso del contexto
+          },
+        }
+      );
 
       // Después de que la nota se haya creado con éxito, establece el mensaje flash y redirige al usuario a la página principal
       setFlashMessage("¡Nota creada exitosamente!");
       setTimeout(() => {
-        window.location.href = "/"; // Redirige al usuario a la página principal
+        window.location.href = "http://localhost:3000/UserNotes"; // Redirige al usuario a la página principal
       }, 2000); // Redirige después de 2 segundos (opcional)
     } catch (error) {
       console.error("Error al crear la nota:", error);
@@ -69,7 +86,7 @@ export default function NotesApp() {
             </div>
             <div className="form-group">
               <Textarea
-                name="descripcion"
+                name="description"
                 label="Description"
                 variant="bordered"
                 placeholder="Enter your description"
@@ -84,7 +101,7 @@ export default function NotesApp() {
             </div>
             <div className="form-group grid place-items-center w-full">
               <button type="submit" className="btn btn-primary mx-auto">
-                Save
+                Crear
               </button>
             </div>
           </form>

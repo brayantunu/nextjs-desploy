@@ -15,7 +15,7 @@ export default function Note({ _id, title, descripcion }) {
 
   const handleDeleteNote = async () => {
     try {
-      await axios.delete(`http://localhost:3001/notes/delete/${_id}`);
+      await axios.delete(`http://localhost:4002/notes/delete/${_id}`);
       console.log("Nota eliminada exitosamente");
       window.location.reload(); // Recargar la página después de eliminar la nota
     } catch (error) {
@@ -25,7 +25,7 @@ export default function Note({ _id, title, descripcion }) {
   };
 
   const handleEditNote = () => {
-    router.push(`http://localhost:3001/notes/edit/${_id}`);
+    router.push(`http://localhost:4002/notes/edit/${_id}`);
   };
 
   return (

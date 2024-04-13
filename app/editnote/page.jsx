@@ -1,4 +1,4 @@
-'use client'
+"use client"
 
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
@@ -21,7 +21,7 @@ export default function EditNote() {
     event.preventDefault();
 
     try {
-      await axios.put(`http://localhost:3001/notes/edit/${noteData._id}`, noteData);
+      await axios.put(`http://localhost:4002/notes/edit/${noteData._id}`, noteData);
       setFlashMessage('¡Nota editada exitosamente!');
       setTimeout(() => {
         window.location.href = 'http://localhost:3000/';
