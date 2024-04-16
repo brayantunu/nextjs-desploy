@@ -1,4 +1,6 @@
 'use client'
+// Este es tu autenticador del frontend
+
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import axios from 'axios';
 
@@ -33,7 +35,7 @@ export const AuthProvider = ({ children }) => {
       setRefreshToken(refreshToken);
       localStorage.setItem('accessToken', accessToken);
       localStorage.setItem('refreshToken', refreshToken);
-      setIsAuthenticated(true);
+      setIsAuthenticated(true); // Actualiza el estado de autenticación después del inicio de sesión
     } catch (error) {
       console.error('Error al iniciar sesión:', error);
     }
@@ -49,7 +51,7 @@ export const AuthProvider = ({ children }) => {
       setRefreshToken(null);
       localStorage.removeItem('accessToken');
       localStorage.removeItem('refreshToken');
-      setIsAuthenticated(false);
+      setIsAuthenticated(false); // Actualiza el estado de autenticación después de cerrar sesión
     } catch (error) {
       console.error('Error al cerrar sesión:', error);
     }
@@ -63,7 +65,7 @@ export const AuthProvider = ({ children }) => {
       setRefreshToken(refreshToken);
       localStorage.setItem('accessToken', accessToken);
       localStorage.setItem('refreshToken', refreshToken);
-      setIsAuthenticated(true);
+      setIsAuthenticated(true); // Actualiza el estado de autenticación después de registrar un nuevo usuario
     } catch (error) {
       console.error('Error al registrar usuario:', error);
     }
