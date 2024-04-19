@@ -1,15 +1,15 @@
 // Add this line at the top of your component file
 "use client";
-
 import React from 'react';
-import { Navbar, NavbarBrand, NavbarContent, NavbarItem, Link, Button } from "@nextui-org/react";
+import { Navbar, NavbarBrand, NavbarContent, NavbarItem, Link } from "@nextui-org/react";
 import  {useAuth}  from '../app/api/users/route'; // Importa la función useAuth del contexto de autenticación
+import DropdownTrigge from './DropdownTrigge';
 
 export default function NavbarComponent() {
-  const { isAuthenticated, userName, logout } = useAuth(); // Obtiene el estado de autenticación y otras funciones del contexto de autenticación
-
+  const { isAuthenticated, username, avatar, logout } = useAuth(); // Obtiene el estado de autenticación y otras funciones del contexto de autenticación
+  
   return (
-    <Navbar>
+    <Navbar className='bg-gradient '>
       <NavbarBrand>
         <Link color="foreground" href="/UserNotes">
           Notes
@@ -35,14 +35,7 @@ export default function NavbarComponent() {
       <NavbarContent justify="end">
         {isAuthenticated ? (
           <>
-            <NavbarItem>
-              <span className="text-gray-600 mr-4">{userName}</span>
-            </NavbarItem>
-            <NavbarItem>
-              <Button color="error" onClick={logout}>
-                Logout
-              </Button>
-            </NavbarItem>
+          <DropdownTrigge username={username} avatar={avatar} logout={logout} />         
           </>
         ) : (
           <> 

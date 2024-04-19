@@ -13,7 +13,22 @@ module.exports = {
   prefix: "",
   theme: {
     extend: {
-     
+      colors:{
+        'bg-blue':'#f0f8ff',
+        'lochmara': {
+          '50': '#f0f8ff',
+          '100': '#e0f0fe',
+          '200': '#b9e1fe',
+          '300': '#7cc9fd',
+          '400': '#36affa',
+          '500': '#0c95eb',
+          '600': '#0077cc',
+          '700': '#015da3',
+          '800': '#064f86',
+          '900': '#0b426f',
+          '950': '#072a4a',
+      },    
+      },
     },
   },
   darkMode: "class",

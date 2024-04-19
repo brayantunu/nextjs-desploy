@@ -1,12 +1,13 @@
 "use client"
-
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Flash from '@/components/Flash';
 import { Card, CardHeader, CardBody, Divider, Button } from '@nextui-org/react';
+import { useAuth } from '../api/users/route'; // Asegúrate de proporcionar la ruta correcta hacia useAuth
 
 export default function EditNote() {
-  const [noteData, setNoteData] = useState({ title: '', descripcion: '' });
+  const { authToken } = useAuth(); // Obtén el token de autenticación del hook useAuth
+  const [noteData, setNoteData] = useState({ title: '', description: '' });
   const [flashMessage, setFlashMessage] = useState(null);
 
   useEffect(() => {
@@ -21,11 +22,14 @@ export default function EditNote() {
     event.preventDefault();
 
     try {
-      await axios.put(`http://localhost:4002/notes/edit/${noteData._id}`, noteData);
-      setFlashMessage('¡Nota editada exitosamente!');
-      setTimeout(() => {
-        window.location.href = 'http://localhost:3000/';
-      }, 2000); // Redirige después de 2 segundos
+      const response = await axios.put(`http://localhost:4002/notes/edit/${noteData._id}`, noteData, {
+        headers: {
+          Authorization: `Bearer ${authToken}` // Utiliza el token de autenticación
+        }
+      });
+      setFlashMessage(response.data.message); // Mensaje de éxito recibido del backend
+      // Puedes agregar lógica adicional aquí, como redirigir al usuario a otra página
+      window.location.href = "/UserNotes";
     } catch (error) {
       console.error("Error al editar la nota:", error);
       // Puedes agregar aquí la lógica para mostrar un mensaje de error si lo deseas
@@ -57,11 +61,11 @@ export default function EditNote() {
             </div>
             <div className="form-group">
               <textarea
-                name="descripcion"
-                placeholder="descripcion"
+                name="description"
+                placeholder="description"
                 className="form-control w-full h-20"
-                value={noteData.descripcion}
-                onChange={(e) => setNoteData({ ...noteData, descripcion: e.target.value })}
+                value={noteData.description}
+                onChange={(e) => setNoteData({ ...noteData, description: e.target.value })}
               ></textarea>
             </div>
             <div className="form-group grid place-items-center w-full">

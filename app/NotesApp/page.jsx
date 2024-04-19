@@ -6,8 +6,8 @@ import CreateNoteForm from "@/components/CreateNoteForm";
 
 export default function CreateNotePage() {
   return (
-    <main className="h-full fixed w-full">
-      <Card className="flex max-w-[400px] mx-auto my-96">
+    <div className="notes fixed top-1/2 left-1/2" >
+      <Card className="w-96 ">
         <CardHeader className="flex gap-3">
           <Image
             alt="nextui logo"
@@ -15,7 +15,7 @@ export default function CreateNotePage() {
             radius="sm"
             src="https://avatars.githubusercontent.com/u/86160567?s=200&v=4"
             width={40}
-          />
+            />
           <div className="flex flex-col">
             <p className="text-md">Add New Notes</p>
             <p className="text-small text-default-500">Plan your studies</p>
@@ -27,6 +27,6 @@ export default function CreateNotePage() {
         </CardBody>
         <Divider />
       </Card>
-    </main>
+            </div>
   );
 }

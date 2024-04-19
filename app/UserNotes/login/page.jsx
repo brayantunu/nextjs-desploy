@@ -1,11 +1,13 @@
 "use client"
 import React, { useState } from 'react';
-import  {useAuth}  from '../../api/users/route'; // Importa el contexto de autenticación
+import { useAuth } from '../../api/users/route'; // Importa el contexto de autenticación
+import "./login.css"
+import Link from 'next/link';
 
 export default function Login() {
   const [formData, setFormData] = useState({
-    email: 'hola@gmail.com',
-    password: '123456789'
+    email: '',
+    password: ''
   });
   const [loading, setLoading] = useState(false);
 
@@ -24,65 +26,67 @@ export default function Login() {
     e.preventDefault();
 
     if (!formData.email || !formData.password) {
-        alert('Por favor, ingresa tu correo electrónico y contraseña');
-        return;
+      alert('Por favor, ingresa tu correo electrónico y contraseña');
+      return;
     }
 
     setLoading(true);
     try {
-        // Llama a la función de login del contexto de autenticación
-        await login(formData);
-        // Redirige a la página principal después del inicio de sesión exitoso
-        window.location.href = '/UserNotes';
+      // Llama a la función de login del contexto de autenticación
+      await login(formData);
+      // Redirige a la página principal después del inicio de sesión exitoso
+      window.location.href = '/UserNotes';
     } catch (error) {
-        console.error('Error:', error.response ? error.response.data.error : error.message);
+      console.error('Error:', error.response ? error.response.data.error : error.message);
     } finally {
-        setLoading(false);
+      setLoading(false);
     }
   };
 
   return (
-    <main className="flex justify-center items-center h-screen">
-      <form onSubmit={handleSubmit} className="bg-gray-800 shadow-md rounded px-8 pt-6 pb-8 mb-4 w-96">
-        <div className="mb-4">
-          <label className="block text-white text-sm font-bold mb-2" htmlFor="email">
-            Correo electrónico
-          </label>
-          <input
-            autoFocus
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            id="email"
-            type="email"
-            placeholder="Correo electrónico"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-          />
+    <div id="form-ui">
+    <form onSubmit={handleSubmit} id="form">
+      <div id="form-body">
+        <div id="welcome-lines">
+          <div id="welcome-line-1">¡Creatividad en Acción!</div>
+          <div id="welcome-line-2">Welcome,</div>
         </div>
-        <div className="mb-6">
-          <label className="block text-white text-sm font-bold mb-2" htmlFor="password">
-            Contraseña
-          </label>
-          <input
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
-            id="password"
-            type="password"
-            placeholder="********"
-            name="password"
-            value={formData.password}
-            onChange={handleChange}
-          />
+        <div id="input-area">
+          <div className="form-inp">
+            <input
+              autoFocus
+              id="email"
+              type="email"
+              placeholder="Correo electrónico"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+            />
+          </div>
+          <div className="form-inp">
+            <input
+              id="password"
+              type="password"
+              placeholder="********"
+              name="password"
+              value={formData.password}
+              onChange={handleChange}
+            />
+          </div>
         </div>
-        <div className="flex items-center justify-center mt-4">
-          <button
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-            type="submit"
-            disabled={loading}
-          >
-            Iniciar sesión
+        <div id="submit-button-cvr">
+          <button id="submit-button" type="submit">
+          Login
           </button>
         </div>
-      </form>
-    </main>
+        <div id="forgot-pass">
+          <a href="#">Forgot password?</a>
+        </div>
+        <div id="forgot-pass">
+        <p>Dont have an account? <Link href="/UserNotes/register">Register</Link> </p>
+        </div>
+      </div>
+    </form>
+  </div>
   );
 }
