@@ -1,39 +1,58 @@
-// Add this line at the top of your component file
 "use client";
-import React from 'react';
-import { Navbar, NavbarBrand, NavbarContent, NavbarItem, Link } from "@nextui-org/react";
-import  {useAuth}  from '../app/api/users/route'; // Importa la función useAuth del contexto de autenticación
+import {
+  Navbar,
+  NavbarBrand,
+  NavbarContent,
+  NavbarItem,
+  NavbarMenuToggle,
+  NavbarMenu,
+  NavbarMenuItem,
+  Link,
+} from "@nextui-org/react";
+import { useState } from "react";
 import DropdownTrigge from './DropdownTrigge';
+import  {useAuth}  from '../app/api/users/route'; // Importa la función useAuth del contexto de autenticación
 
-export default function NavbarComponent() {
+
+export default function Navbarr() {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { isAuthenticated, username, avatar, logout } = useAuth(); // Obtiene el estado de autenticación y otras funciones del contexto de autenticación
-  
-  return (
-    <Navbar className='bg-gradient '>
-      <NavbarBrand>
-        <Link color="foreground" href="/UserNotes">
-          Notes
+
+
+  const menuItems = [
+    { text: "Add Note", href: "/NotesApp" },
+    { text: "Customers", href: "#" },
+    { text: "Integrations", href: "#" },
+  ];
+
+  const renderMenuItems = () => {
+    return menuItems.map((item, index) => (
+      <NavbarItem key={index} isActive={index === 1}>
+        <Link color="foreground" href={item.href}>
+          {item.text}
         </Link>
-      </NavbarBrand>
-      <NavbarContent className="hidden sm:flex gap-4" justify="center">
-        <NavbarItem>
-          <Link color="foreground" href="/NotesApp">
-            Notes App Nodejs and Mongodb
-          </Link>
-        </NavbarItem>
-        <NavbarItem isActive>
-          <Link href="#" aria-current="page">
-            Customers
-          </Link>
-        </NavbarItem>
-        <NavbarItem>
-          <Link color="foreground" href="#">
-            Integrations
-          </Link>
-        </NavbarItem>
+      </NavbarItem>
+    ));
+  };
+
+  return (
+    <Navbar onMenuOpenChange={setIsMenuOpen}>
+      <NavbarContent>
+        <NavbarMenuToggle
+          aria-label={isMenuOpen ? "Close menu" : "Open menu"}
+          className="sm:hidden"
+        />
+        <NavbarBrand>
+          <Link href="/">NOTE</Link>
+        </NavbarBrand>
       </NavbarContent>
+
+      <NavbarContent className="hidden sm:flex gap-4" justify="center">
+        {renderMenuItems()}
+      </NavbarContent>
+
       <NavbarContent justify="end">
-        {isAuthenticated ? (
+      {isAuthenticated ? (
           <>
           <DropdownTrigge username={username} avatar={avatar} logout={logout} />         
           </>
@@ -52,6 +71,8 @@ export default function NavbarComponent() {
           </>
         )}
       </NavbarContent>
+
+      <NavbarMenu>{renderMenuItems()}</NavbarMenu>
     </Navbar>
   );
 }
