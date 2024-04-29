@@ -21,8 +21,9 @@ export default function Navbarr() {
 
   const menuItems = [
     { text: "Add Note", href: "/NotesApp" },
-    { text: "Customers", href: "#" },
-    { text: "Integrations", href: "#" },
+    { text: "Login", href: "/UserNotes/login" },
+    { text: "Register", href: "/UserNotes/register" },
+    
   ];
 
   const renderMenuItems = () => {
@@ -36,7 +37,7 @@ export default function Navbarr() {
   };
 
   return (
-    <Navbar onMenuOpenChange={setIsMenuOpen}>
+    <Navbar className="bg-gradient" onMenuOpenChange={setIsMenuOpen}>
       <NavbarContent>
         <NavbarMenuToggle
           aria-label={isMenuOpen ? "Close menu" : "Open menu"}
@@ -47,11 +48,9 @@ export default function Navbarr() {
         </NavbarBrand>
       </NavbarContent>
 
-      <NavbarContent className="hidden sm:flex gap-4" justify="center">
-        {renderMenuItems()}
-      </NavbarContent>
+      
 
-      <NavbarContent justify="end">
+      <NavbarContent justify="end" className="hidden sm:flex ">
       {isAuthenticated ? (
           <>
           <DropdownTrigge username={username} avatar={avatar} logout={logout} />         
