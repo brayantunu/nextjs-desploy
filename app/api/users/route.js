@@ -35,7 +35,7 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (userData) => {
     try {
-      const response = await axios.post('http://localhost:4002/auth/login', userData);
+      const response = await axios.post('https://backend-web-notes.onrender.com/auth/login', userData);
       const { accessToken, refreshToken, username, avatar } = response.data;
       console.log("Username from backend:", username);
       console.log("Avatar from backend:", avatar);
@@ -57,7 +57,7 @@ export const AuthProvider = ({ children }) => {
   
   const logout = async () => {
     try {
-      await axios.delete('http://localhost:4002/auth/logout', {
+      await axios.delete('https://backend-web-notes.onrender.com/auth/logout', {
         data: { refreshToken },
         headers: { Authorization: `Bearer ${authToken}` },
       });
@@ -75,7 +75,7 @@ export const AuthProvider = ({ children }) => {
 
   const handleRegister = async (userData) => {
     try {
-      const response = await axios.post('http://localhost:4002/auth/register', userData);
+      const response = await axios.post('https://backend-web-notes.onrender.com/auth/register', userData);
       const { accessToken, refreshToken, username, avatar } = response.data;
       setAuthToken(accessToken);
       setRefreshToken(refreshToken);

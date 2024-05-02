@@ -35,7 +35,7 @@ const CreateNoteForm = () => {
   const createNote = async () => {
     try {
       const response = await axios.post(
-        "http://localhost:4002/notes/new-note",
+        "https://backend-web-notes.onrender.com/notes/new-note",
         { title, description },
         { headers: { Authorization: `Bearer ${authToken}` } }
       );

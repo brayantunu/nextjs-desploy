@@ -22,7 +22,7 @@ export default function EditNote() {
     event.preventDefault();
 
     try {
-      const response = await axios.put(`http://localhost:4002/notes/edit/${noteData._id}`, noteData, {
+      const response = await axios.put(`https://backend-web-notes.onrender.com/notes/edit/${noteData._id}`, noteData, {
         headers: {
           Authorization: `Bearer ${authToken}` // Utiliza el token de autenticación
         }

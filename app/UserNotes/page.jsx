@@ -19,7 +19,7 @@ const Notes = () => {
           throw new Error('Unauthorized');
         }
         
-        const response = await axios.get('http://localhost:4002/notes/all', {
+        const response = await axios.get('https://backend-web-notes.onrender.com/notes/all', {
           headers: {
             Authorization: `Bearer ${authToken}`
           }
@@ -41,7 +41,7 @@ const Notes = () => {
 
   const deleteNote = async (id) => {
     try {
-      await axios.delete(`http://localhost:4002/notes/delete/${id}`, {
+      await axios.delete(`https://backend-web-notes.onrender.com/notes/delete/${id}`, {
         headers: {
           Authorization: `Bearer ${authToken}`
         }
