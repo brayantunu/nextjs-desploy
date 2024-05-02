@@ -6,7 +6,7 @@ import {
   NavbarItem,
   NavbarMenuToggle,
   NavbarMenu,
-  NavbarMenuItem,
+  Button,
   Link,
 } from "@nextui-org/react";
 import { useState } from "react";
@@ -17,19 +17,24 @@ import  {useAuth}  from '../app/api/users/route'; // Importa la función useAuth
 export default function Navbarr() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { isAuthenticated, username, avatar, logout } = useAuth(); // Obtiene el estado de autenticación y otras funciones del contexto de autenticación
-
+  const handleLogout = () => {
+    // Llama a la función de logout cuando el usuario hace clic en "Log Out"
+    logout();
+    window.location.href = "/";
+  };
 
   const menuItems = [
     { text: "Add Note", href: "/NotesApp" },
     { text: "Login", href: "/UserNotes/login" },
     { text: "Register", href: "/UserNotes/register" },
-    
+    { text: "Log Out", onClick: handleLogout }
+
   ];
 
   const renderMenuItems = () => {
     return menuItems.map((item, index) => (
       <NavbarItem key={index} isActive={index === 1}>
-        <Link color="foreground" href={item.href}>
+        <Link color="foreground" href={item.href} onClick={item.onClick} >
           {item.text}
         </Link>
       </NavbarItem>
@@ -48,9 +53,7 @@ export default function Navbarr() {
         </NavbarBrand>
       </NavbarContent>
 
-      
-
-      <NavbarContent justify="end" className="hidden sm:flex ">
+      <NavbarContent justify="end" className=" hidden sm:flex ">
       {isAuthenticated ? (
           <>
           <DropdownTrigge username={username} avatar={avatar} logout={logout} />         
@@ -70,8 +73,8 @@ export default function Navbarr() {
           </>
         )}
       </NavbarContent>
+        <NavbarMenu>{renderMenuItems()}</NavbarMenu>
 
-      <NavbarMenu>{renderMenuItems()}</NavbarMenu>
     </Navbar>
   );
 }

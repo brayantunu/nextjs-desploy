@@ -1,16 +1,17 @@
-'use client'
+"use client"
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import SpinnerCentered from '@/components/SpinnerCenter';
 import { useAuth } from '../api/users/route';
 import NoteCard from '../../components/cardNote';
+import Buttonall from '@/components/buttonsall';
 
 const Notes = () => {
-  const { authToken} = useAuth();
+  const { authToken } = useAuth();
   const [loading, setLoading] = useState(true);
   const [notes, setNotes] = useState([]);
-  
-  
+  const [selectedNotes, setSelectedNotes] = useState([]);
+
   useEffect(() => {
     const fetchNotes = async () => {
       try {
@@ -60,15 +61,36 @@ const Notes = () => {
     window.location.href = `http://localhost:3000/editnote?note=${encodedNoteData}`;
   };
 
+  const handleNoteSelect = (id) => {
+    // Alternar la selección de la nota
+    setSelectedNotes(prevSelectedNotes => {
+      if (prevSelectedNotes.includes(id)) {
+        return prevSelectedNotes.filter(noteId => noteId !== id);
+      } else {
+        return [...prevSelectedNotes, id];
+      }
+    });
+  };
+
+  const deleteSelectedNotes = async (selectedNotes) => {
+    try {
+      // Elimina todas las notas seleccionadas
+      await Promise.all(selectedNotes.map(deleteNote));
+      // Limpia el estado de las notas seleccionadas
+      setSelectedNotes([]);
+    } catch (error) {
+      console.error('Error deleting selected notes:', error);
+    }
+  };
+
   return (
     <div>
       {loading ? (
         <SpinnerCentered />
       ) : (
         <div>
-          
           <h1 className='text-center'>Notas del usuario</h1>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mx-4">
             {notes.map((note, index) => (
               <NoteCard
                 key={index}
@@ -78,8 +100,13 @@ const Notes = () => {
                 imageSrc={note.imageSrc}
                 onDelete={deleteNote}
                 onEdit={editNote} // Agrega la función editNote como prop
+                onSelect={handleNoteSelect} // Agrega la función handleNoteSelect como prop
+                selected={selectedNotes.includes(note._id)} // Agrega el estado de selección
               />
             ))}
+          </div>
+          <div className="buttonall-container">
+            <Buttonall onDelete={() => deleteSelectedNotes(selectedNotes)} /> {/* Agrega la función onDelete al componente Buttonall */}
           </div>
         </div>
       )}

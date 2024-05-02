@@ -1,0 +1,35 @@
+
+.up {
+  position: absolute;
+  top: -12.5rem; /* Ajusta la posición vertical según sea necesario */
+  display: flex;
+  flex-direction: column;
+}
+
+.card1,
+.card2,
+.card3 {
+  background-color: #ffffff; /* Color de fondo de los botones */
+  border: none;
+  border-radius: 50%; /* Para hacer los botones circulares */
+  margin-bottom: 10px; /* Espacio entre los botones */
+  cursor: pointer;
+  padding: 10px;
+  height: 50px;
+  width: 50px;
+}
+
+@keyframes slideIn {
+  0% {
+    opacity: 0;
+    transform: translateY(50px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-slideIn {
+  animation: slideIn 0.3s ease;
+}

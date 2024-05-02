@@ -6,7 +6,6 @@ import { Input } from "@nextui-org/react";
 import { Textarea } from "@nextui-org/react";
 
 const CreateNoteForm = () => {
-  const variants = ["bordered"];
   const { authToken, isAuthenticated } = useAuth();
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -56,7 +55,7 @@ const CreateNoteForm = () => {
             id="title"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
-            label="Email"
+            label="Title"
           />
         </div>
         <div className="w-full grid grid-cols-12 gap-4 mt-5">
