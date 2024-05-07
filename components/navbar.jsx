@@ -24,7 +24,6 @@ export default function Navbarr() {
   };
 
   const menuItems = [
-    { text: "Add Note", href: "/NotesApp" },
     { text: "Login", href: "/UserNotes/login" },
     { text: "Register", href: "/UserNotes/register" },
     { text: "Log Out", onClick: handleLogout }

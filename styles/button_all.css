@@ -1,7 +1,7 @@
 
 .up {
   position: absolute;
-  top: -12.5rem; /* Ajusta la posición vertical según sea necesario */
+  top: -4.0rem; /* Ajusta la posición vertical según sea necesario */
   display: flex;
   flex-direction: column;
 }
