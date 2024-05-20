@@ -34,3 +34,43 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+
+
+/** @type {import('tailwindcss').Config} */
+import {nextui} from "@nextui-org/react";
+const { addDynamicIconSelectors } = require('@iconify/tailwind')
+
+module.exports = {
+  darkMode: ["class"],
+  content: [
+    './pages/**/*.{js,jsx}',
+    './components/**/*.{js,jsx}',
+    './app/**/*.{js,jsx}',
+    './src/**/*.{js,jsx}',
+    "./node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}"
+
+  ],
+  prefix: "",
+  theme: {
+    extend: {
+      colors:{
+        'bg-blue':'#f0f8ff',
+        'lochmara': {
+          '50': '#f0f8ff',
+          '100': '#e0f0fe',
+          '200': '#b9e1fe',
+          '300': '#7cc9fd',
+          '400': '#36affa',
+          '500': '#0c95eb',
+          '600': '#0077cc',
+          '700': '#015da3',
+          '800': '#064f86',
+          '900': '#0b426f',
+          '950': '#072a4a',
+      },    
+      },
+    },
+  },
+  darkMode: "class",
+  plugins: [nextui(),addDynamicIconSelectors()]
+}

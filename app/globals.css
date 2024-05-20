@@ -1,7 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
+@import "rsuite/dist/rsuite.css";
 /* *{
     border: 1px solid red;
 } */
@@ -153,14 +153,4 @@
   .loader {
     left: calc(50% + 300px); /* Mueve el loader más a la derecha en televisores */
   }
-}
-
-
-
-
-.buttonall-container {
-  position: fixed;
-  bottom: 20px; /* Ajusta la posición vertical según sea necesario */
-  right: 20px; /* Ajusta la posición horizontal según sea necesario */
-  z-index: 999; /* Asegura que el botón esté por encima de otros elementos */
 }

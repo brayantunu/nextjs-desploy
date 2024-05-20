@@ -1,8 +1,10 @@
 import Image from "next/image";
+import Navbarr from "@/components/navbar";
 export default function Notes() {
   return (
     <div>
-      <main className="mt-24">
+      <main className="">
+        <Navbarr />
         <section
           className="header relative items-center flex h-screen md:py-16 md:my-0 "
           style={{ maxHeight: "860px" }}
