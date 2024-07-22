@@ -1,7 +1,7 @@
 import "./globals.css";
 import Providers from "./providers";
-import "rsuite/dist/rsuite-no-reset.min.css";
-import { CustomProvider } from "rsuite";
+// import "rsuite/dist/rsuite-no-reset.min.css";
+// import { CustomProvider } from "rsuite";
 import { AuthProvider } from "./api/users/route";
 export const metadata = {
   title: "Create Note App",
@@ -13,9 +13,9 @@ export default function RootLayout({ children, pageProps }) {
     <html lang="es" className="bg-white-blur">
       <body>
         <Providers>
-          <CustomProvider>
             <AuthProvider>{children}</AuthProvider>
-          </CustomProvider>
+          {/* <CustomProvider>
+          </CustomProvider> */}
         </Providers>
       </body>
     </html>

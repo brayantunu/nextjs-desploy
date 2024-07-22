@@ -26,11 +26,9 @@ function Buttoncalendar() {
 
   return (
     <div>
-      <button className='boton' onClick={() => alert('¡Haz clic en el botón!')}>
           <p className='semana'>{diaSemana}</p>
           <p className='dia'>{numeroDia}</p>
       
-      </button>
     </div>
   );
 }

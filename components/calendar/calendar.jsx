@@ -1,75 +1,80 @@
-import React from 'react';
-import { Calendar, Whisper, Popover, Badge } from 'rsuite';
-import 'rsuite/Calendar/styles/index.css';
+import React, { useState, useEffect } from 'react';
+import { Calendar, momentLocalizer } from 'react-big-calendar';
+import moment from 'moment';
+import { createNote, getNotes } from '../../app/api/users/ApiNotes'; // Importa tus funciones aquí
+import 'react-big-calendar/lib/css/react-big-calendar.css';
+import '../../styles/Calendar.css';
 
-function getTodoList(date) {
-  const day = date.getDate();
+const localizer = momentLocalizer(moment);
 
-  switch (day) {
-    case 10:
-      return [
-        { time: '10:30 am', title: 'Meeting' },
-        { time: '12:00 pm', title: 'Lunch' }
-      ];
-    case 15:
-      return [
-        { time: '09:30 pm', title: 'Products Introduction Meeting' },
-        { time: '12:30 pm', title: 'Client entertaining' },
-        { time: '02:00 pm', title: 'Product design discussion' },
-        { time: '05:00 pm', title: 'Product test and acceptance' },
-        { time: '06:30 pm', title: 'Reporting' },
-        { time: '10:00 pm', title: 'Going home to walk the dog' }
-      ];
-    default:
-      return [];
-  }
-}
+function Calendario() {
+  const [events, setEvents] = useState([]);
+  const authToken = 'your-auth-token'; // Reemplaza con tu token de autenticación
 
-export default function Calendario() {
-  function renderCell(date) {
-    const list = getTodoList(date);
-    const displayList = list.filter((item, index) => index < 2);
+  useEffect(() => {
+    getNotes(authToken)
+      .then(response => {
+        const events = response.map(note => ({
+          id: note._id,
+          title: note.description,
+          start: new Date(note.createdAt), // Ajusta estos campos según tu estructura de datos
+          end: new Date(note.createdAt)    // Ajusta estos campos según tu estructura de datos
+        }));
+        setEvents(events);
+      })
+      .catch(error => console.error('Error fetching notes:', error));
+  }, [authToken]);
 
-    if (list.length) {
-      const moreCount = list.length - displayList.length;
-      const moreItem = (
-        <li>
-          <Whisper
-            placement="top"
-            trigger="click"
-            speaker={
-              <Popover>
-                {list.map((item, index) => (
-                  <p key={index}>
-                    <b>{item.time}</b> - {item.title}
-                  </p>
-                ))}
-              </Popover>
-            }
-          >
-            <a>{moreCount} more</a>
-          </Whisper>
-        </li>
-      );
-
-      return (
-        <ul className="calendar-todo-list">
-          {displayList.map((item, index) => (
-            <li key={index}>
-              <Badge /> <b>{item.time}</b> - {item.title}
-            </li>
-          ))}
-          {moreCount ? moreItem : null}
-        </ul>
-      );
+  const handleSelectSlot = ({ start, end }) => {
+    const description = prompt('Event Description:');
+    if (description) {
+      createNote(authToken, description)
+        .then(response => {
+          const newEvent = {
+            id: response._id,
+            title: response.description,
+            start: new Date(response.createdAt),
+            end: new Date(response.createdAt)
+          };
+          setEvents([...events, newEvent]);
+        })
+        .catch(error => console.error('Error creating note:', error));
     }
+  };
 
-    return null;
-  }
+  const handleSelectEvent = (event) => {
+    const newDescription = prompt('New Event Description:', event.title);
+    if (newDescription) {
+      axios.put(`http://localhost:4002/notes/${event.id}`, { description: newDescription }, {
+        headers: {
+          Authorization: `Bearer ${authToken}`,
+        },
+      })
+      .then(response => {
+        const updatedEvents = events.map(ev => (ev.id === event.id ? {
+          ...ev,
+          title: response.data.description
+        } : ev));
+        setEvents(updatedEvents);
+      })
+      .catch(error => console.error('Error updating note:', error));
+    }
+  };
 
   return (
-    <div className="fullscreen-calendar">
-      <Calendar bordered renderCell={renderCell} />
+    <div className="calendario">
+      <Calendar
+        localizer={localizer}
+        events={events}
+        startAccessor="start"
+        endAccessor="end"
+        style={{ height: 500 }}
+        selectable
+        onSelectSlot={handleSelectSlot}
+        onSelectEvent={handleSelectEvent}
+      />
     </div>
   );
 }
+
+export default Calendario;

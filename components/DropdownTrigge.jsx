@@ -1,13 +1,13 @@
 import React from "react";
 import { Dropdown, DropdownTrigger, DropdownMenu, DropdownItem, Avatar, User } from "@nextui-org/react";
-
-export default function DropdownTrigge({ username, avatar, logout }) {
+import { useAuth } from "../app/api/users/route.js";
+export default function DropdownTrigge() {
+  const {logout,avatar,username} = useAuth();
   const handleLogout = () => {
     // Llama a la función de logout cuando el usuario hace clic en "Log Out"
     logout();
     window.location.href = "/";
   };
-
   return (
     <div className="flex items-center gap-4">
       <Dropdown placement="bottom-start">

@@ -1,19 +1,20 @@
 "use client";
 import { AuthProvider } from "../api/users/route";
 import Slidernavbar from "@/components/slidernavbar/slidernabar";
-import SpinnerCentered from "@/components/SpinnerCenter";
 
 
 export default function UserNotes({ children }) {
   return (
     <>
       <AuthProvider>
-        <container className="flex">
-          <container className=" h-[100vh] ">
+        <div className="flex"> {/* Add h-screen to the main container */}
+          <div className="w-32"> {/* Container for the navbar */}
             <Slidernavbar />
-          </container>
-          <container>{children}</container>
-        </container>
+          </div>
+          <div className="flex-1 overflow-y-auto"> {/* Add flex-1 and p-4 to the content container */}
+            {children}
+          </div>
+        </div>
       </AuthProvider>
     </>
   );
